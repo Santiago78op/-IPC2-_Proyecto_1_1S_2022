@@ -46,6 +46,7 @@ Selecciona una opción:\n
             if opcionMenu == self.cargar:
                 carga = input("Inserta la ruta del archivo .xml: >> \n")
                 infodata.Leer(carga)
+                infodata.readXML()
             elif opcionMenu == self.mostrar_conte:
                 print("Mostrar Contenido")
             elif opcionMenu == self.graficar_patron:
