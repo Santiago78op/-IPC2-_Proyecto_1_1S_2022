@@ -1,5 +1,6 @@
 import os
-from data.Lectura import Analizador
+from Data.Lectura import Analizador
+from Data.CreacionAtributos import Atributos
 
 class Menu:
 
@@ -25,6 +26,7 @@ Selecciona una opción:\n
 
     def menu(self) -> bool:
         infodata = Analizador()
+        atri = Atributos()
         #cargar_imagen = analizar_Imagen.Analizarimagen()
 
         while True:
@@ -48,7 +50,9 @@ Selecciona una opción:\n
                 infodata.Leer(carga)
                 infodata.readXML()
             elif opcionMenu == self.mostrar_conte:
-                print("Mostrar Contenido")
+                titulo = infodata.procesar_titulo()
+                piso = infodata.procesar_piso()
+                atri.redesign(titulo,piso)
             elif opcionMenu == self.graficar_patron:
                 print("Graficar Patron")
             elif opcionMenu == self.cambiar_patron:
