@@ -54,12 +54,11 @@ class PatronListaDoble():
                 current = current.nodo.link
 
     def buscarPatron(self,codigo):
-        current = self.raiz
+        nodoAux = self.raiz
 
-        while current and current.codigo != codigo:
-            current = current.nodo.link
-
-        if current is None:
-            return None
-        elif current:
-            return current
+        while nodoAux.codigo != codigo:
+            if nodoAux.nodo.link is not None:
+                nodoAux = nodoAux.nodo.link
+            else:
+                return None
+        return nodoAux

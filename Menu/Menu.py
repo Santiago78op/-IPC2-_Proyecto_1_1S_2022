@@ -8,7 +8,7 @@ from Constructor.Codigo import Codigo
 from Lista.ListaSimple import PisoListaSimple
 from Lista.ListaCodDoble import ListaCodDoble
 import xml.etree.ElementTree as ET
-
+from Graphics.GeneraGrafica import Grafica
 
 class Menu():
 
@@ -33,6 +33,8 @@ Selecciona una opción:\n
     def menu(self) -> bool:
         infodata = Analizador()
         listaPisos = PisoListaSimple()
+        grafica = Grafica()
+
 
 
         while True:
@@ -67,6 +69,7 @@ Selecciona una opción:\n
                             print(Fore.LIGHTGREEN_EX, "Listado de Pisos A-Z")
                             listaPisos.sortSimpleListPisos()
                             listaPisos.printSimplePiso()
+
                             nombrePiso = input("Inserta el Piso: ")
                             piso = listaPisos.buscarPiso(nombrePiso)
                             if piso == None:
@@ -75,16 +78,23 @@ Selecciona una opción:\n
                                 print(Fore.LIGHTGREEN_EX,"Piso: ",piso.piso)
                                 piso.listaPatron.sortDoubleListPatron()
                                 piso.listaPatron.printDoblePatron()
-
-                            nombreCodigo = input("Inserta el Codigo a Graficar: ")
-                            codigo = piso.listaPatron.buscarPatron(nombreCodigo)
-                            if codigo == None:
-                                print(Fore.RED, "No Existe el Codigo Error!")
-                            else:
-                                print(Fore.LIGHTMAGENTA_EX, "\nEl Patron a Trabajar es: \n")
-                                print(Fore.LIGHTGREEN_EX, "Codigo: ", codigo.codigo)
-                                print(Fore.LIGHTGREEN_EX, "Patron: ", codigo.patron,"\n")
+                                nombreCodigo = input("Inserta el Codigo a Graficar: ")
+                                codigo = piso.listaPatron.buscarPatron(nombreCodigo)
+                                if codigo == None:
+                                    print(Fore.RED, "No Existe el Codigo Error!")
+                                else:
+                                    print(Fore.LIGHTMAGENTA_EX, "\nEl Patron a Trabajar es: \n")
+                                    print(Fore.LIGHTGREEN_EX, "Codigo: ", codigo.codigo)
+                                    print(Fore.LIGHTGREEN_EX, "Patron: ", codigo.patron,"\n")
                                 codigo.listaCodigos.printDobleCod()
+                                letra = piso.listaPatron.buscarPatron(nombreCodigo).listaCodigos.buscarLetra(1,2).letra
+                                print(letra)
+
+                                fila = piso.fila
+                                columna = piso.columna
+                                lista = piso.listaPatron.buscarPatron(nombreCodigo).listaCodigos
+                                #grafica.graphic(nombrePiso,fila,columna,nombreCodigo,lista)
+                                #piso.listaPatron.buscarPatron(nombreCodigo).listaCodigos.printDobleCod()
 
 
                 elif opcionMenu == self.cambiar_patron:
@@ -154,24 +164,24 @@ Selecciona una opción:\n
 
         for pisos in root:
             for filas in pisos.iter('R'):
-                fila = filas.text
+                fila = filas.text.strip()
             for columnas in pisos.iter('C'):
-                columna = columnas.text
+                columna = columnas.text.strip()
             for volteos in pisos.iter('F'):
-                volteo = volteos.text
+                volteo = volteos.text.strip()
             for intercambios in pisos.iter('S'):
-                intercambio = intercambios.text
-            nuevoPiso = Piso(pisos.attrib['nombre'],fila,columna,volteo,intercambio)
+                intercambio = intercambios.text.strip()
+            nuevoPiso = Piso(str(pisos.attrib['nombre']),int(fila),int(columna),int(volteo),int(intercambio))
             listaPisos.append(nuevoPiso)
             for patrones in pisos.iter('patron'):
                 letra = patrones.text
-                nuevoPatron = Patron(patrones.attrib['codigo'],patrones.text)
+                nuevoPatron = Patron(str(patrones.attrib['codigo'].strip()),str(patrones.text.strip()))
 
                 cont = 0
                 for f in range(1,int(fila)+1):
                     for c in range(1,int(columna)+1):
                         l = letra[cont]
-                        nuevoCodigo = Codigo(f, c, l)
+                        nuevoCodigo = Codigo(int(f), int(c), str(l))
                         nuevoPatron.listaCodigos.append(nuevoCodigo)
                         cont = cont + 1
 
@@ -181,42 +191,3 @@ Selecciona una opción:\n
 
 
 
-    def graphic(self, nombrePiso,filas,columnas,nombreCod,letras=ListaCodDoble()):
-        graphviz = ''' 
-                   digraph S{
-        node[shape=box fillcolor="white" style =filled]
-        subgraph cluster_p{
-        label= "PISO '''+nombrePiso+''' " 
-        label= "PATRON "
-        '''
-
-        graphviz = graphviz + '''
-                bgcolor = "skyblue"
-                raiz[label =''' + nombreCod + ''']
-                edge[dir = "both"]
-                --#quitar comentario--
-                /*Aqui creamos las cabeceras
-                de las filas*/'''
-
-        for i in range(1,int(filas)+1):
-            graphviz = graphviz + '''
-                    Fila'''+str(i)+'''[label=" ''' +str(i)+'''",group='''+str(1)+'''];'''
-
-        for j in range(1, int(filas)):
-            graphviz = graphviz + '''
-                Fila''' + str(j) + '''->Fila''' + str(j + 1) + '''
-                    '''
-
-        for w in range(1,int(columnas)+1):
-            graphviz = graphviz + '''
-                    Columna'''+str(w)+'''[label=" ''' +str(w)+'''",group='''+str(w+1)+'''];'''
-
-        for z in range(1, int(columnas)):
-            graphviz = graphviz + '''
-                Columna''' + str(z) + '''->Columna''' + str(j + 1) + '''
-                    '''
-
-        graphviz=graphviz+'''
-                raiz->Fila1;
-                raiz->Columna1;
-                '''

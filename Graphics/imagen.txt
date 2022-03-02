@@ -1,0 +1,12 @@
+
+        digraph S{
+            node[shape=box fillcolor="white" style =filled]
+            
+            subgraph cluster_p{
+            label = "PISO: W"
+            label= "PATRON" 
+            bgcolor = "green"
+            raiz[label =cod31]
+            edge[dir = "both"]
+        
+            Fila1[label=" 1",group=1];

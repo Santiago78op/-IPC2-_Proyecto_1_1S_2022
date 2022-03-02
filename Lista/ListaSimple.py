@@ -46,9 +46,9 @@ class PisoListaSimple():
                 index = current.nodo.link
                 while index != None:
                     if current.piso > index.piso:
-                        temp = current.piso
-                        current.piso = index.piso
-                        index.piso = temp
+                        temp = current
+                        current = index
+                        index = temp
                     index = index.nodo.link
                 current = current.nodo.link
 

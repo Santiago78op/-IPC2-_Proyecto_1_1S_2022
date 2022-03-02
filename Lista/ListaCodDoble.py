@@ -37,13 +37,11 @@ class ListaCodDoble():
 
 
     def buscarLetra(self, fila,columna):
-        current = self.raiz
+        nodoAux = self.raiz
 
-        while current:
-            if current.fila == fila and current.columna == columna:
-                current = current.letra
-
-        if current is None:
-            return None
-        elif current:
-            return current
+        while (nodoAux.fila != fila and nodoAux.columna != columna):
+            if nodoAux.nodo.link is not None:
+                nodoAux = nodoAux.nodo.link
+            else:
+                return None
+        return nodoAux

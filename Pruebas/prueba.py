@@ -12,6 +12,7 @@ print(variable)
 
 #C:\Users\santi\PyCharmProyect\IPC2\Proyecto_1\app\Pruebas\prueba_piso1.xml
 #https://fathomless-dawn-11616.herokuapp.com/analizar
+#C:\\Users\\santi\\PyCharmProyect\\IPC2\\Proyecto_1\\app\\
 """
     contenedor_piso.append([nombre_piso,R.childNodes[0].data,C.childNodes[0].data,F.childNodes[0].data,S.childNodes[0].data])
 
