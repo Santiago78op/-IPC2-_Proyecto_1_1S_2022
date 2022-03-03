@@ -1,12 +1,10 @@
 import os
-from os import system,startfile
 from colorama import Fore
 from Data.Lectura import Analizador
 from Constructor.Patron import Patron
 from Constructor.Piso import Piso
 from Constructor.Codigo import Codigo
 from Lista.ListaSimple import PisoListaSimple
-from Lista.ListaCodDoble import ListaCodDoble
 import xml.etree.ElementTree as ET
 from Graphics.GeneraGrafica import Grafica
 
@@ -32,7 +30,6 @@ Selecciona una opción:\n
 
     def menu(self) -> bool:
         infodata = Analizador()
-        listaPisos = PisoListaSimple()
         grafica = Grafica()
 
 
@@ -67,78 +64,77 @@ Selecciona una opción:\n
 
                         if opcPiso == '1':
                             print(Fore.LIGHTGREEN_EX, "Listado de Pisos A-Z")
-                            listaPisos.sortSimpleListPisos()
-                            listaPisos.printSimplePiso()
+                            listaPisos.bubbleSortPisos()
+                            listaPisos.recorrerPiso()
 
-                            nombrePiso = input("Inserta el Piso: ")
-                            piso = listaPisos.buscarPiso(nombrePiso)
+                            nombrePiso = input("\nInserta el Piso: ")
+                            piso = listaPisos.busquedaPiso(nombrePiso)
                             if piso == None:
                                 print(Fore.RED,"No Existe el Piso Error!")
                             else:
-                                print(Fore.LIGHTGREEN_EX,"Piso: ",piso.piso)
-                                piso.listaPatron.sortDoubleListPatron()
-                                piso.listaPatron.printDoblePatron()
-                                nombreCodigo = input("Inserta el Codigo a Graficar: ")
-                                codigo = piso.listaPatron.buscarPatron(nombreCodigo)
+                                print("Piso: ", piso.piso, " Filas: ", piso.fila, " Columna: ",piso.columna)
+                                print(Fore.LIGHTCYAN_EX,"El Piso fue encontrado con Exito!!!!!\n")
+                                piso.listaPatron.sortPatron()
+                                piso.listaPatron.recorrerPatron()
+                                nombreCodigo = input("\nInserta el Codigo a Graficar: ")
+                                codigo = piso.listaPatron.busquedaPatron(nombreCodigo)
                                 if codigo == None:
                                     print(Fore.RED, "No Existe el Codigo Error!")
                                 else:
                                     print(Fore.LIGHTMAGENTA_EX, "\nEl Patron a Trabajar es: \n")
                                     print(Fore.LIGHTGREEN_EX, "Codigo: ", codigo.codigo)
                                     print(Fore.LIGHTGREEN_EX, "Patron: ", codigo.patron,"\n")
-                                codigo.listaCodigos.printDobleCod()
-                                letra = piso.listaPatron.buscarPatron(nombreCodigo).listaCodigos.buscarLetra(1,2).letra
-                                print(letra)
+                                    codigo.listaCodigos.recorrerCodigo()
+                                    fila = piso.fila
+                                    columna = piso.columna
+                                    lista = piso.listaPatron.busquedaPatron(nombreCodigo).listaCodigos
+                                    grafica.graphic(nombrePiso,fila,columna,nombreCodigo,lista)
 
-                                fila = piso.fila
-                                columna = piso.columna
-                                lista = piso.listaPatron.buscarPatron(nombreCodigo).listaCodigos
-                                #grafica.graphic(nombrePiso,fila,columna,nombreCodigo,lista)
-                                #piso.listaPatron.buscarPatron(nombreCodigo).listaCodigos.printDobleCod()
 
 
                 elif opcionMenu == self.cambiar_patron:
-                    opcPiso = ''
-
-                    while opcPiso != '0':
-                        print(Fore.BLUE, "Graficar Patron\n")
-                        print(Fore.RED, "Seleccione el Patron Base el cual "
-                                        "se Modificara al Patron Cambiar\n")
-                        print(Fore.BLUE, "1) -> Buscar Piso")
-                        print(Fore.BLUE, "0) -> Salir")
-
-                        opcPiso = input("\nIngresa Opción: ")
-
-                        if opcPiso == '1':
-                            print(Fore.LIGHTGREEN_EX, "Listado de Pisos A-Z")
-                            listaPisos.sortSimpleListPisos()
-                            listaPisos.printSimplePiso()
-                            nombrePiso = input("Inserta el Piso: ")
-                            piso = listaPisos.buscarPiso(nombrePiso)
-                            if piso == None:
-                                print(Fore.RED,"No Existe el Piso Error!")
-                            else:
-                                print(Fore.LIGHTGREEN_EX,"Piso: ",piso.piso)
-                                piso.listaPatron.sortDoubleListPatron()
-                                piso.listaPatron.printDoblePatron()
-                                nombreCodigo = input("\nInserta el Codigo a Base: ")
-                                codigo = piso.listaPatron.buscarPatron(nombreCodigo)
-                                if codigo == None:
-                                    print(Fore.RED, "No Existe el Codigo Error!")
-                                else:
-                                    print(Fore.LIGHTMAGENTA_EX, "\nEl Patron Base: \n")
-                                    print(Fore.LIGHTGREEN_EX, "Codigo: ", codigo.codigo)
-                                    print(Fore.LIGHTGREEN_EX, "Patron: ", codigo.patron,"\n")
-
-                                nombreCodigoCambio = input("Inserta el Codigo a Cambiar: ")
-                                codigoCambio = piso.listaPatron.buscarPatron(nombreCodigoCambio)
-                                if codigoCambio == None:
-                                    print(Fore.RED, "No Existe el Codigo Error!")
-                                else:
-                                    print(Fore.LIGHTMAGENTA_EX, "\nEl Patron al cual se Cambiara Patron Base: \n")
-                                    print(Fore.LIGHTGREEN_EX, "Codigo: ", codigoCambio.codigo)
-                                    print(Fore.LIGHTGREEN_EX, "Patron: ", codigoCambio.patron, "\n")
-                                    print(Fore.LIGHTMAGENTA_EX, "\nGraficandooooo.....!!!!!! \n")
+                    pass
+                    # opcPiso = ''
+                    #
+                    # while opcPiso != '0':
+                    #     print(Fore.BLUE, "Graficar Patron\n")
+                    #     print(Fore.RED, "Seleccione el Patron Base el cual "
+                    #                     "se Modificara al Patron Cambiar\n")
+                    #     print(Fore.BLUE, "1) -> Buscar Piso")
+                    #     print(Fore.BLUE, "0) -> Salir")
+                    #
+                    #     opcPiso = input("\nIngresa Opción: ")
+                    #
+                    #     if opcPiso == '1':
+                    #         print(Fore.LIGHTGREEN_EX, "Listado de Pisos A-Z")
+                    #         listaPisos.sortSimpleListPisos()
+                    #         listaPisos.printSimplePiso()
+                    #         nombrePiso = input("Inserta el Piso: ")
+                    #         piso = listaPisos.buscarPiso(nombrePiso)
+                    #         if piso == None:
+                    #             print(Fore.RED,"No Existe el Piso Error!")
+                    #         else:
+                    #             print(Fore.LIGHTGREEN_EX,"Piso: ",piso.piso)
+                    #             piso.listaPatron.sortDoubleListPatron()
+                    #             piso.listaPatron.printDoblePatron()
+                    #             nombreCodigo = input("\nInserta el Codigo a Base: ")
+                    #             codigo = piso.listaPatron.buscarPatron(nombreCodigo)
+                    #             if codigo == None:
+                    #                 print(Fore.RED, "No Existe el Codigo Error!")
+                    #             else:
+                    #                 print(Fore.LIGHTMAGENTA_EX, "\nEl Patron Base: \n")
+                    #                 print(Fore.LIGHTGREEN_EX, "Codigo: ", codigo.codigo)
+                    #                 print(Fore.LIGHTGREEN_EX, "Patron: ", codigo.patron,"\n")
+                    #
+                    #             nombreCodigoCambio = input("Inserta el Codigo a Cambiar: ")
+                    #             codigoCambio = piso.listaPatron.buscarPatron(nombreCodigoCambio)
+                    #             if codigoCambio == None:
+                    #                 print(Fore.RED, "No Existe el Codigo Error!")
+                    #             else:
+                    #                 print(Fore.LIGHTMAGENTA_EX, "\nEl Patron al cual se Cambiara Patron Base: \n")
+                    #                 print(Fore.LIGHTGREEN_EX, "Codigo: ", codigoCambio.codigo)
+                    #                 print(Fore.LIGHTGREEN_EX, "Patron: ", codigoCambio.patron, "\n")
+                    #                 print(Fore.LIGHTMAGENTA_EX, "\nGraficandooooo.....!!!!!! \n")
 
                 elif opcionMenu == self.salir:
                     print("\nEsto no es un adios sino un asta pronto!!!!!!\n")
@@ -171,21 +167,23 @@ Selecciona una opción:\n
                 volteo = volteos.text.strip()
             for intercambios in pisos.iter('S'):
                 intercambio = intercambios.text.strip()
-            nuevoPiso = Piso(str(pisos.attrib['nombre']),int(fila),int(columna),int(volteo),int(intercambio))
+            nuevoPiso = Piso(pisos.attrib['nombre'],fila,columna,volteo,intercambio)
             listaPisos.append(nuevoPiso)
             for patrones in pisos.iter('patron'):
-                letra = patrones.text
-                nuevoPatron = Patron(str(patrones.attrib['codigo'].strip()),str(patrones.text.strip()))
+                print(patrones.attrib['codigo'])
+                print(patrones.text)
+                nuevoPatron = Patron(patrones.attrib['codigo'],patrones.text)
+                nuevoPiso.listaPatron.append(nuevoPatron)
 
+                letras = patrones.text.strip()
+                letra = str(letras)
                 cont = 0
                 for f in range(1,int(fila)+1):
                     for c in range(1,int(columna)+1):
                         l = letra[cont]
-                        nuevoCodigo = Codigo(int(f), int(c), str(l))
+                        nuevoCodigo = Codigo(l, f, c)
                         nuevoPatron.listaCodigos.append(nuevoCodigo)
                         cont = cont + 1
-
-                nuevoPiso.listaPatron.append(nuevoPatron)
 
         return listaPisos
 

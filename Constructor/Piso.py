@@ -1,4 +1,3 @@
-from Nodo.NodoSimple import NodoSimple
 from Lista.ListaDoble import PatronListaDoble
  
 class Piso():
@@ -9,5 +8,4 @@ class Piso():
         self.columna = columna
         self.volteo = volteo
         self.intercambiar = intercambiar
-        self.nodo = NodoSimple()
         self.listaPatron = PatronListaDoble()

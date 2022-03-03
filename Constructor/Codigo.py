@@ -1,9 +1,7 @@
-from Nodo.NodoSimple import NodoSimple
 
 class Codigo():
 
-    def __init__(self, fila=None,columna=None,letra=None):
+    def __init__(self, letra=None,fila=None,columna=None):
+        self.letra = letra
         self.fila = fila
         self.columna = columna
-        self.letra = letra
-        self.nodo = NodoSimple()

@@ -1,64 +1,56 @@
-from Constructor.Patron import Patron
+from Nodo.NodoDoble import NodoDoble
 
 class PatronListaDoble():
 
     def __init__(self):
-        self.raiz = Patron()
-        self.ultimo = self.raiz
+        self.head = None
 
 
     def append(self, nuevoPatron):
-        if self.raiz.patron is None:
-            self.raiz = nuevoPatron
-        elif self.raiz.nodo.link is None:
-            self.raiz.nodo.link = nuevoPatron
-            nuevoPatron.nodo.previous = self.raiz
-            self.ultimo = nuevoPatron
+        if self.head is None:
+            self.head = NodoDoble(data=nuevoPatron)
         else:
-            self.ultimo.nodo.link = nuevoPatron
-            nuevoPatron.nodo.previous = self.ultimo
-            self.ultimo = nuevoPatron
+            current = NodoDoble(data=nuevoPatron,link=self.head)
+            self.head.previous = current
+            self.head = current
 
 
-    def printDoblePatron(self):
-        nodoAux = self.raiz
+    def recorrerPatron(self):
+        if self.head is None:
+            return
+        current = self.head
+        print("Codigo: ",current.data.codigo," Patron: ", current.data.patron)
 
-        cadena = ''
-        encabezado = ''
-        while True:
-            if nodoAux.patron is not None:
-                cadena += "(" +" Codigo: "+nodoAux.codigo + " " +"Patron: "+nodoAux.patron + ")"
-                if nodoAux.nodo.link is not None:
-                    encabezado += "  -> "
-                    cadena += " -> "
-                    nodoAux = nodoAux.nodo.link
-                else:
-                    break
-            else:
-                break
-        print(cadena)
+        while current.link:
+            current = current.link
+            print("Codigo: ", current.data.codigo, " Patron: ", current.data.patron)
 
-    def sortDoubleListPatron(self):
-        if self.raiz == None:
+
+    def busquedaPatron(self, codigo):
+        current = self.head
+
+        while current and current.data.codigo != codigo:
+            current = current.link
+
+        if current is None:
+            print("El Codigo no Existe en el Piso")
+            return None
+        elif current:
+            return current.data
+
+    def sortPatron(self):
+        if self.head == None:
             return
         else:
-            current = self.raiz
-            while current.nodo.link:
-                index = current.nodo.link
+            current = self.head
+            while current.link != None:
+                index = current.link
                 while index != None:
-                    if current.codigo > index.codigo:
-                        temp = current.codigo
-                        current.codigo = index.codigo
-                        index.codigo = temp
-                    index = index.nodo.link
-                current = current.nodo.link
+                    if current.data.codigo > index.data.codigo:
+                        temp = current.data
+                        current.data = index.data
+                        index.data = temp
+                    index = index.link
+                current = current.link
 
-    def buscarPatron(self,codigo):
-        nodoAux = self.raiz
 
-        while nodoAux.codigo != codigo:
-            if nodoAux.nodo.link is not None:
-                nodoAux = nodoAux.nodo.link
-            else:
-                return None
-        return nodoAux

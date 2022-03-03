@@ -1,47 +1,41 @@
-from Constructor.Codigo import Codigo
+from Nodo.NodoDobleCod import NodoDobleCod
 
 class ListaCodDoble():
 
     def __init__(self):
-        self.raiz = Codigo()
-        self.ultimo = self.raiz
+        self.head = None
 
 
     def append(self, nuevoCod):
-        if self.raiz.letra is None:
-            self.raiz = nuevoCod
-        elif self.raiz.nodo.link is None:
-            self.raiz.nodo.link = nuevoCod
-            nuevoCod.nodo.previous = self.raiz
-            self.ultimo = nuevoCod
+        if self.head is None:
+            self.head = NodoDobleCod(data=nuevoCod)
         else:
-            self.ultimo.nodo.link = nuevoCod
-            nuevoCod.nodo.previous = self.ultimo
-            self.ultimo = nuevoCod
+            current = NodoDobleCod(data=nuevoCod,link=self.head)
+            self.head.previous = current
+            self.head = current
 
-    def printDobleCod(self):
-        nodoAux = self.raiz
+    def buscarLetra(self,fila,columna):
+        current = self.head
+        flag = False
+        if self.head == None:
+            return None
 
-        cadena = ''
-        while True:
-            if nodoAux.letra is not None:
-                cadena += "(" +" letra: "+str(nodoAux.letra) + " " +"fila: "+str(nodoAux.fila) +" " +"Columna: "+ str(nodoAux.columna)+ ")"
-                if nodoAux.nodo.link is not None:
-                    cadena += " \n "
-                    nodoAux = nodoAux.nodo.link
-                else:
-                    break
-            else:
+        while current != None:
+            if current.data.fila == fila and current.data.columna == columna:
+                flag = True
+                return current.data.letra
                 break
-        print(cadena)
+            current = current.link
+
+    def recorrerCodigo(self):
+        if self.head is None:
+            return
+        current = self.head
+        print("Letra: ",current.data.letra," Fila: ", current.data.fila," Columna: ", current.data.columna)
+
+        while current.link:
+            current = current.link
+            print("Letra: ",current.data.letra," Fila: ", current.data.fila," Columna: ", current.data.columna)
 
 
-    def buscarLetra(self, fila,columna):
-        nodoAux = self.raiz
 
-        while (nodoAux.fila != fila and nodoAux.columna != columna):
-            if nodoAux.nodo.link is not None:
-                nodoAux = nodoAux.nodo.link
-            else:
-                return None
-        return nodoAux

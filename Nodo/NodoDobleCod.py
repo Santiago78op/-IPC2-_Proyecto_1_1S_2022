@@ -1,6 +1,5 @@
 
-
-class NodoDoble():
+class NodoDobleCod():
 
     def __init__(self, data=None,link=None, previous=None):
         self.data = data

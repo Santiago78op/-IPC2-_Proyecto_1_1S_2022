@@ -1,65 +1,70 @@
-from Constructor.Piso import Piso
+from Nodo.NodoSimple import NodoSimple
 
 class PisoListaSimple():
 
-    def __init__(self):
-        self.raiz = Piso()
-        self.ultimo = self.raiz
+    def __init__(self,nodecount=0):
+        self.head = None
+        self.nodecount = nodecount
 
 
     def append(self, nuevoPiso):
-        if self.raiz.piso is None:
-            self.raiz = nuevoPiso
-        elif self.raiz.nodo.link is None:
-            self.raiz.nodo.link = nuevoPiso
-            self.ultimo = nuevoPiso
-        else:
-            self.ultimo.nodo.link = nuevoPiso
-            self.ultimo = nuevoPiso
-
-
-    def printSimplePiso(self):
-        nodoAux = self.raiz
-
-        cadena = ''
-        while True:
-            if nodoAux.piso is not None:
-                cadena += "(" + nodoAux.piso + ")"
-                if nodoAux.nodo.link is not None:
-                    cadena += " -> "
-                    nodoAux = nodoAux.nodo.link
-                else:
-                    break
-            else:
-                break
-        print(cadena)
-
-
-    def sortSimpleListPisos(self):
-        current = self.raiz
-        index = None
-
-        if self.raiz == None:
+        if self.head is None:
+            self.head = NodoSimple(data=nuevoPiso)
+            self.nodecount = self.nodecount + 1
             return
-        else:
-            while current != None:
-                index = current.nodo.link
-                while index != None:
-                    if current.piso > index.piso:
-                        temp = current
-                        current = index
-                        index = temp
-                    index = index.nodo.link
-                current = current.nodo.link
+        current = self.head
+        while current.link:
+            current = current.link
+        current.link = NodoSimple(data=nuevoPiso)
+        self.nodecount = self.nodecount + 1
 
 
-    def buscarPiso(self,piso):
-        nodoAux = self.raiz
+    def recorrerPiso(self):
+        current = self.head
 
-        while nodoAux.piso != piso:
-            if nodoAux.nodo.link is not None:
-                nodoAux = nodoAux.nodo.link
-            else:
-                return None
-        return nodoAux
+        while current != None:
+            print("Piso: ",current.data.piso," Filas: ",current.data.fila," Columna: ",current.data.columna)
+            current = current.link
+
+    def busquedaPiso(self,piso):
+        if self.head is None:
+            print("El piso no existe en el Archivo!!")
+            return
+        current = self.head
+
+        while current is not None:
+            if current.data.piso == piso:
+                return current.data
+            current = current.link
+        print("Item no Encontrado")
+        return None
+
+    def bubbleSortPisos(self):
+        for i in range(self.nodecount-1):
+            curr = self.head
+            nxt = curr.link
+            prev = None
+            while nxt:
+                if curr.data.piso > nxt.data.piso:
+                    if prev == None:
+                        prev = curr.link
+                        nxt = nxt.link
+                        prev.link = curr
+                        curr.link = nxt
+                        self.head = prev
+                    else:
+                        temp = nxt
+                        nxt = nxt.link
+                        prev.link = curr.link
+                        prev = temp
+                        temp.link = curr
+                        curr.link = nxt
+                else:
+                    prev=curr
+                    curr=nxt
+                    nxt=nxt.link
+            i=i+1
+
+
+
 

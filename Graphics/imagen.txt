@@ -4,9 +4,71 @@
             
             subgraph cluster_p{
             label = "PISO: W"
-            label= "PATRON" 
             bgcolor = "green"
-            raiz[label =cod31]
+            raiz[label =ttt24]
             edge[dir = "both"]
         
             Fila1[label=" 1",group=1];
+            Fila2[label=" 2",group=1];
+            Fila1->Fila2;
+            Columna1[label="1",group=2,fillcolor=yellow];
+            Columna2[label="2",group=3,fillcolor=yellow];
+            Columna3[label="3",group=4,fillcolor=yellow];
+            Columna4[label="4",group=5,fillcolor=yellow];
+            Columna1->Columna2;
+            Columna2->Columna3;
+            Columna3->Columna4;
+            raiz->Fila1;
+            raiz->Columna1;
+            
+        {rank = same;raiz;Columna1;Columna2;Columna3;Columna4}
+        
+            nodo1_1[label=" B",fillcolor=orange,group=2];
+            nodo1_2[label=" W",fillcolor=orange,group=3];
+            nodo1_3[label=" B",fillcolor=orange,group=4];
+            nodo1_4[label=" W",fillcolor=orange,group=5];
+            nodo2_1[label=" W",fillcolor=orange,group=2];
+            nodo2_2[label=" W",fillcolor=orange,group=3];
+            nodo2_3[label=" W",fillcolor=orange,group=4];
+            nodo2_4[label=" W",fillcolor=orange,group=5];
+            Fila1->nodo1_1;
+            {
+            
+                rank=same;Fila1;nodo1_1;nodo1_2;nodo1_3;nodo1_4}
+                
+            Fila2->nodo2_1;
+            {
+            
+                rank=same;Fila2;nodo2_1;nodo2_2;nodo2_3;nodo2_4}
+                
+            Columna1->nodo1_1;
+            
+            Columna2->nodo1_2;
+            
+            Columna3->nodo1_3;
+            
+            Columna4->nodo1_4;
+            
+            nodo1_1->nodo1_2;
+            
+            nodo1_2->nodo1_3;
+            
+            nodo1_3->nodo1_4;
+            
+            nodo2_1->nodo2_2;
+            
+            nodo2_2->nodo2_3;
+            
+            nodo2_3->nodo2_4;
+            
+                    nodo1_1->nodo2_1;
+                    
+                    nodo1_2->nodo2_2;
+                    
+                    nodo1_3->nodo2_3;
+                    
+                    nodo1_4->nodo2_4;
+                    
+            }
+        }
+        
