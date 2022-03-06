@@ -37,5 +37,39 @@ class ListaCodDoble():
             current = current.link
             print("Letra: ",current.data.letra," Fila: ", current.data.fila," Columna: ", current.data.columna)
 
+    def modificar(self, letra,fila, columna):
+        current = self.head
+
+        if self.head == None:
+            return None
+
+        while current != None:
+            if current.data.fila == fila and current.data.columna == columna:
+                current.data.letra = letra
+                break
+            current = current.link
+
+    def eliminar(self, letra,fila,columna):
+        current = self.head
+        while current:
+            if current.data.letra == letra and current.data.fila == fila and current.data.columna == columna:
+                if current.previous:
+                    if current.link:
+                        current.previous.link = current.link
+                        current.link.previous = current.previous
+                    else:
+                        current.previous.link = None
+                        current.previous = None
+                else:
+                    if current.link:
+                        self.head = current.link
+                        current.link.previous = None
+                        # self.primero.anterior = None
+                    else:
+                        self.head = None
+                return True
+            else:
+                current = current.link
+        return False
 
 

@@ -1,0 +1,218 @@
+from Lista.ListaCodDoble import ListaCodDoble
+from Constructor.Codigo import Codigo
+from Constructor.Piso import Piso
+from Constructor.Patron import Patron
+from Lista.ListaSimple import PisoListaSimple
+from Graphics.GeneraGrafica import Grafica
+
+class Matrix():
+
+    def __init__(self):
+        self.cadena = ''
+
+    def matrix(self,nombrePiso,nombreCod,volteo,intercambio,filas,columnas,lista_b=ListaCodDoble(),lista_c=ListaCodDoble()):
+
+        grafica = Grafica()
+        matriz = []
+        alterMatrix = []
+        voltear = volteo
+        intercambiar = intercambio
+        cadena = ""
+        inter = 0
+        volt = 0
+        for f in range(1, int(filas) + 1):
+            for c in range(1, int(columnas) + 1):
+                letra_c = lista_c.buscarLetra(f,c)
+                letra_b = lista_b.buscarLetra(f, c)
+                if letra_b == letra_c:
+                    matriz.append(letra_b)
+                    cadena = cadena + "Item no requiere acción.\n"
+                elif letra_b != letra_c:
+                    if (lista_b.buscarLetra(f, c + 1) and lista_b.buscarLetra(f + 1, c)) is not None:
+                        link = lista_b.buscarLetra(f, c + 1)
+                        down = lista_b.buscarLetra(f + 1, c)
+                        if letra_c == link and letra_c != down:
+                            if voltear == intercambiar:
+                                matriz.append(link)
+                                cadena = cadena + f"Item requirio cualquiera de las dos acciones: {letra_b, f, c} por {link, f, c + 1}.\n"
+                                nuevo = Codigo(link, f, c)
+                                lista_b.append(nuevo)
+                                nuevo = Codigo(letra_b, f, c + 1)
+                                lista_b.append(nuevo)
+                                alterMatrix.append([link, f, c])
+                                alterMatrix.append([letra_b, f, c + 1])
+                                inter = inter + intercambiar
+                            elif voltear < intercambiar:
+                                #  2 < 3
+                                matriz.append(letra_c)
+                                cadena = cadena + f"Item requirio la acción Voltear: {letra_b, f, c} por {letra_c,f,c}.\n"
+                                volt = volt + voltear
+                            elif voltear > intercambiar:
+                                # 4 > 3
+                                matriz.append(link)
+                                cadena = cadena + f"Item requirio cualquiera de las dos acciones: {letra_b, f, c} por {link, f, c + 1}.\n"
+                                nuevo = Codigo(link, f, c)
+                                lista_b.append(nuevo)
+                                nuevo = Codigo(letra_b, f, c + 1)
+                                lista_b.append(nuevo)
+                                alterMatrix.append([link, f, c])
+                                alterMatrix.append([letra_b, f, c + 1])
+                                inter = inter + intercambiar
+                        elif letra_c == down and letra_c != link:
+                            if voltear == intercambiar:
+                                matriz.append(down)
+                                cadena = cadena + f"Item requirio la acción Intercambio: {letra_b, f, c} por {down, f + 1, c}.\n"
+                                nuevo = Codigo(down, f, c)
+                                lista_b.append(nuevo)
+                                nuevo = Codigo(letra_b, f + 1, c)
+                                lista_b.append(nuevo)
+                                alterMatrix.append([down, f, c])
+                                alterMatrix.append([letra_b, f + 1, c])
+                                inter = inter + intercambiar
+                            elif voltear < intercambiar:
+                                matriz.append(letra_c)
+                                cadena = cadena + f"Item requirio la acción Voltear: {letra_b, f, c} por {letra_c,f,c}.\n"
+                                volt = volt + voltear
+                            elif voltear > intercambiar:
+                                matriz.append(down)
+                                cadena = cadena + f"Item requirio la acción Intercambio: {letra_b, f, c} por {down, f + 1, c}.\n"
+                                nuevo = Codigo(down, f, c)
+                                lista_b.append(nuevo)
+                                nuevo = Codigo(letra_b, f + 1, c)
+                                lista_b.append(nuevo)
+                                alterMatrix.append([down, f, c])
+                                alterMatrix.append([letra_b, f + 1, c])
+                                inter = inter + intercambiar
+                        elif letra_c == down and letra_c == link:
+                            if voltear == intercambiar:
+                                matriz.append(link)
+                                cadena = cadena + f"Item requirio la acción Intercambio: {letra_b, f, c} por {link, f, c + 1}.\n"
+                                nuevo = Codigo(link, f, c)
+                                lista_b.append(nuevo)
+                                nuevo = Codigo(letra_b, f, c + 1)
+                                lista_b.append(nuevo)
+                                alterMatrix.append([link, f, c])
+                                alterMatrix.append([letra_b, f, c + 1])
+                                inter = inter + intercambiar
+                            elif voltear < intercambiar:
+                                matriz.append(letra_c)
+                                cadena = cadena + f"Item requirio la acción Voltear: {letra_b, f, c} por {letra_c,f,c}.\n"
+                                volt = volt + voltear
+                            elif voltear > intercambiar:
+                                matriz.append(link)
+                                cadena = cadena + f"Item requirio la acción Intercambio: {letra_b, f, c} por {link, f, c + 1}.\n"
+                                nuevo = Codigo(link, f, c)
+                                lista_b.append(nuevo)
+                                nuevo = Codigo(letra_b, f, c + 1)
+                                lista_b.append(nuevo)
+                                alterMatrix.append([link, f, c])
+                                alterMatrix.append([letra_b, f, c + 1])
+                                inter = inter + intercambiar
+                        elif letra_c != down and letra_c != link:
+                            matriz.append(letra_c)
+                            cadena = cadena + f"Item requirio la acción Volteo: {letra_b, f, c} por {letra_c, f, c}.\n"
+                            volt = volt + voltear
+                    elif (lista_b.buscarLetra(f + 1, c) is not None) and (lista_b.buscarLetra(f, c + 1) is None):
+                        down = lista_b.buscarLetra(f + 1, c)
+                        if letra_c == down:
+                            if voltear == intercambiar:
+                                matriz.append(down)
+                                cadena = cadena + f"Item requirio la acción Intercambio: {letra_b, f, c} por {down, f + 1, c}.\n"
+                                nuevo = Codigo(down, f, c)
+                                lista_b.append(nuevo)
+                                nuevo = Codigo(letra_b, f + 1, c)
+                                lista_b.append(nuevo)
+                                alterMatrix.append([down, f, c])
+                                alterMatrix.append([letra_b, f, c + 1])
+                                inter = inter + intercambiar
+                            elif voltear < intercambiar:
+                                matriz.append(letra_c)
+                                cadena = cadena + f"Item requirio la acción Voltear: {letra_b, f, c} por {letra_c, f, c}.\n"
+                                volt = volt + voltear
+                            elif voltear > intercambiar:
+                                matriz.append(down)
+                                cadena = cadena + f"Item requirio la acción Intercambio: {letra_b, f, c} por {down, f + 1, c}.\n"
+                                nuevo = Codigo(down, f, c)
+                                lista_b.append(nuevo)
+                                nuevo = Codigo(letra_b, f + 1, c)
+                                lista_b.append(nuevo)
+                                alterMatrix.append([down, f, c])
+                                alterMatrix.append([letra_b, f, c + 1])
+                                inter = inter + intercambiar
+                        elif letra_c != down:
+                            matriz.append(letra_c)
+                            cadena = cadena + f"Item requirio la acción Voltear: {letra_b, f, c} por {letra_c, f, c}.\n"
+                            volt = volt + voltear
+                    elif (lista_b.buscarLetra(f + 1, c) is None) and (lista_b.buscarLetra(f, c + 1) is not None):
+                        link = lista_b.buscarLetra(f, c + 1)
+                        if letra_c == link:
+                            if voltear == intercambiar:
+                                matriz.append(link)
+                                cadena = cadena + f"Item requirio la acción Intercambio: {letra_b, f, c} por {link, f, c + 1}.\n"
+                                inter = inter + intercambiar
+                                nuevo = Codigo(link, f, c)
+                                lista_b.append(nuevo)
+                                nuevo = Codigo(letra_b, f, c + 1)
+                                lista_b.append(nuevo)
+                                alterMatrix.append([link, f, c])
+                                alterMatrix.append([letra_b, f, c + 1])
+                            elif voltear < intercambiar:
+                                matriz.append(letra_c)
+                                cadena = cadena + f"Item requirio la acción Voltear: {letra_b, f, c} por {letra_c, f, c}.\n"
+                                volt = volt + voltear
+                            elif voltear > intercambiar:
+                                matriz.append(link)
+                                cadena = cadena + f"Item requirio la acción Intercambio: {letra_b, f, c} por {link, f, c + 1}.\n"
+                                inter = inter + intercambiar
+                                nuevo = Codigo(link, f, c)
+                                lista_b.append(nuevo)
+                                nuevo = Codigo(letra_b, f, c + 1)
+                                lista_b.append(nuevo)
+                                alterMatrix.append([link, f, c])
+                                alterMatrix.append([letra_b, f, c + 1])
+                        elif letra_c != link:
+                            matriz.append(letra_c)
+                            cadena = cadena + f"Item requirio la acción Voltear: {letra_b, f, c} por {letra_c, f, c}.\n"
+                            volt = volt + voltear
+                    elif (lista_b.buscarLetra(f + 1, c) is None) and (lista_b.buscarLetra(f, c + 1) is None):
+                        matriz.append(letra_c)
+                        cadena = cadena + f"Item requirio la acción Voltear: {letra_b, f, c} por {letra_c, f, c}.\n"
+                        volt = volt + voltear
+
+
+        for dato in alterMatrix:
+            letra_n = dato[0]
+            fila_n = dato[1]
+            columna_n = dato[2]
+            lista_b.eliminar(letra_n,fila_n,columna_n)
+
+        listaPisos = PisoListaSimple()
+        nuevoNodo = "".join(matriz)
+        nuevoNodo = str(nuevoNodo.strip())
+        nuevoPiso = Piso(nombrePiso, filas, columnas, volteo, intercambio)
+        listaPisos.append(nuevoPiso)
+        nombreCodigo = nombreCod+"Nuevo"
+        nuevoPatron = Patron(nombreCodigo,nuevoNodo)
+        nuevoPiso.listaPatron.append(nuevoPatron)
+        cont = 0
+        for f in range(1, int(filas) + 1):
+            for c in range(1, int(columnas) + 1):
+                l = nuevoNodo[cont]
+                nuevoCodigo = Codigo(l, f, c)
+                nuevoPatron.listaCodigos.append(nuevoCodigo)
+                cont = cont + 1
+
+        pisoActual = listaPisos.busquedaPiso(nombrePiso)
+        lista = pisoActual.listaPatron.busquedaPatron(nombreCodigo).listaCodigos
+        grafica.graphic(nombrePiso,filas,columnas,nombreCod,lista)
+
+        costoM = inter + volt
+        cadena = cadena+ "\n El costo Minimo de esta Accion es: "+str(costoM)
+        ruta = 'Graphics\\Instrucciones.txt '
+        file = open(ruta, 'w')
+        file.write(f"{cadena}")
+        file.close()
+        self.cadena = cadena
+
+    def retornoCadena(self):
+        return self.cadena

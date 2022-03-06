@@ -53,4 +53,28 @@ class PatronListaDoble():
                     index = index.link
                 current = current.link
 
+    def eliminarPatron(self, codigo):
+        current = self.head
+        while current:
+            if current.data.codigo == codigo:
+                if current.previous:
+                    if current.link:
+                        current.previous.link = current.link
+                        current.link.previous = current.previous
+                    else:
+                        current.previous.link = None
+                        current.previous = None
+                else:
+                    if current.link:
+                        self.head = current.link
+                        current.link.previous = None
+                        # self.primero.anterior = None
+                    else:
+                        self.head = None
+                return True
+            else:
+                current = current.link
+        return False
+
+
 
