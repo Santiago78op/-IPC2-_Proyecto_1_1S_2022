@@ -1,7 +1,6 @@
-Item requirio la accion volteo: ('W', 1, 1) switch ('B', 1, 1).
-Item no requiere acción.
-Item no requiere acción.
-Item requirio la accion volteo: ('B', 1, 4) switch ('W', 1, 4).
+Item requirio la accion Intercambio: ('W', 1, 1) switch ('B', 1, 2).
+Item requirio la accion Intercambio: ('W', 1, 2) switch ('B', 1, 3).
+Item requirio la accion Intercambio: ('W', 1, 3) switch ('B', 1, 4).
 Item requirio la accion volteo: ('B', 1, 5) switch ('W', 1, 5).
 
- El costo Minimo de esta Accion es: 3000
+ El costo Minimo de esta Accion es: 1003

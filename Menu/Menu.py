@@ -131,7 +131,7 @@ Selecciona una opción:\n
                                     print(Fore.LIGHTGREEN_EX, "Patron: ", codigob.patron,"\n")
                                     print(Fore.LIGHTYELLOW_EX, "Se almaceno la Infomacion del Piso Base con Exito!!!!\n")
                                     lista_pisob = pisob.listaPatron.busquedaPatron(codigoBase).listaCodigos
-                                    #grafica.graphic(pisoBase, pisob.fila, pisob.columna, codigoBase, lista_pisob)
+                                    grafica.graphic(pisoBase, pisob.fila, pisob.columna, codigoBase, lista_pisob)
 
 
                             print(Fore.LIGHTGREEN_EX, "Listado de Pisos A-Z")
@@ -158,10 +158,10 @@ Selecciona una opción:\n
                                         print(Fore.LIGHTGREEN_EX, "Codigo: ", codigoc.codigo)
                                         print(Fore.LIGHTGREEN_EX, "Patron: ", codigoc.patron,"\n")
                                         print(Fore.LIGHTYELLOW_EX, "Se almaceno la Infomacion del Piso Cambio con Exito!!!!\n")
-                                        lista_pisoc = pisob.listaPatron.busquedaPatron(codigoCambio).listaCodigos
+                                        lista_pisoc = pisoc.listaPatron.busquedaPatron(codigoCambio).listaCodigos
                                         #grafica.graphic(pisoCambio, pisoc.fila, pisoc.columna, codigoCambio, lista_pisoc)
                                         matriz.matrix(pisoBase,codigoBase,codigob.patron,int(pisob.volteo),int(pisob.intercambiar), pisob.fila, pisob.columna, lista_pisob, lista_pisoc)
-                                        matriz.algoritmo(pisoBase, codigoBase,codigob.patron,int(pisob.volteo), int(pisob.intercambiar),pisob.fila, pisob.columna, lista_pisob, lista_pisoc)
+                                        #matriz.algoritmo(pisoBase, codigoBase,codigob.patron,int(pisob.volteo), int(pisob.intercambiar),pisob.fila, pisob.columna, lista_pisob, lista_pisoc)
                                         print("Generando Cambios Espere")
 
 

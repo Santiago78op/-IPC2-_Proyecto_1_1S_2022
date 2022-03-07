@@ -3,7 +3,7 @@
     <piso nombre="W">
         <R> 2 </R>   <!-- fila -->
         <C> 4 </C>   <!-- columna -->
-        <F> 1 </F>   <!-- Operación de Volteo azulejo -->
+        <F> 1000 </F>   <!-- Operación de Volteo azulejo -->
         <S> 1 </S>   <!-- Operación de Intercambio azulejo -->
         <patrones>
             <patron codigo="ppp12">

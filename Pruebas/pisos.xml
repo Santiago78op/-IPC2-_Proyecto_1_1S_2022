@@ -32,8 +32,8 @@
 	<piso nombre="ejemplo03">
 		<R> 1 </R>
 		<C> 5 </C>
-		<F> 1000 </F>
-		<S> 1 </S>
+		<F> 2 </F>
+		<S> 6 </S>
 		<patrones>
 			<patron codigo="cod31">
 				WBBBB
